@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\Graph;
 use App\Models\Node;
+use App\Models\Relation;
 use Faker\Factory;
+use Faker\Provider\Base;
 use Illuminate\Console\Command;
 
 class GenerateRandomGraph extends Command
@@ -48,8 +50,17 @@ class GenerateRandomGraph extends Command
         $graph = Graph::factory()->create();
         $nodes = Node::factory()->count($nbNodes)->create(['graph_id' => $graph->id]);
 
+        
+        $array_id = Node::where('graph_id', '=', $graph->id)->get('id');
+
+        $relations = Relation::factory()
+                            ->count($nbNodes)
+                            ->create([
+                                'node_parent_id' => Base::randomElement($array_id),
+                                'node_child_id' => Base::randomElement($array_id)
+                                ]);
 
 
-        $this->info($nodes->count());
+        $this->info('Created '.$nodes->count(). ' Nodes Successful');
     }
 }

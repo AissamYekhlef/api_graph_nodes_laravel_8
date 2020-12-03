@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Node;
+use App\Models\Relation;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
-class NodeFactory extends Factory
+class RelationFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Node::class;
+    protected $model = Relation::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +22,7 @@ class NodeFactory extends Factory
     public function definition()
     {
         return [
-            // 
+            //
         ];
-
     }
 }

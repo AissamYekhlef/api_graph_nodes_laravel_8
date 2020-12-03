@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Graph;
 use Illuminate\Console\Command;
 
 class ClearEmptyGraph extends Command
@@ -37,6 +38,14 @@ class ClearEmptyGraph extends Command
      */
     public function handle()
     {
-        return 0;
+        $graphs = Graph::all();
+        $nbrDeleted = 0;
+        foreach ($graphs as $graph) {
+            if($graph->nodes->count() == 0){
+                $nbrDeleted ++;
+            }
+        }
+
+        $this->info('Delete ' . $nbrDeleted . ' Graphs');
     }
 }
