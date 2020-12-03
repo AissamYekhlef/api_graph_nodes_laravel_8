@@ -42,6 +42,7 @@ class ClearEmptyGraph extends Command
         $nbrDeleted = 0;
         foreach ($graphs as $graph) {
             if($graph->nodes->count() == 0){
+                $graph->delete();
                 $nbrDeleted ++;
             }
         }
