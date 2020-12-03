@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\GenerateRandomGraph::class,
+        Commands\ClearEmptyGraph::class,
+        Commands\GraphStats::class,
     ];
 
     /**

@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+// Artisan::command('graph:gen', function () {
+//     $this->info('the graph is generated successful');
+// })->purpose('Graph project commands');
+ 

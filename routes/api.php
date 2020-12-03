@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GraphController;
+use App\Http\Controllers\NodeController;
+use App\Http\Controllers\RelationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,10 +29,40 @@ Route::group([
 
 ], function ($router) {
 
-    Route::post('login', 'AuthController@login');
-    Route::post('register', 'AuthController@register');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('user-profile', 'AuthController@userProfile');
+    Route::post('login', [AuthController::class,'login']);
+    Route::post('register', [AuthController::class,'register']);
+    Route::post('logout', [AuthController::class,'logout']);
+    Route::post('refresh', [AuthController::class,'refresh']);
+    Route::post('user-profile', [AuthController::class,'userProfile']);
 
+});
+
+
+Route::group([
+
+    'middleware' => 'api',
+    // 'prefix' => 'auth'
+
+], function () {
+
+    // Route::apiResource('graphs', GraphController::class);
+    Route::get('graphs', [GraphController::class, 'index'])->name('graphs.index');
+    Route::post('graphs/create', [GraphController::class, 'store'])->name('graphs.store');
+    Route::post('graphs/{graph}/update', [GraphController::class, 'update'])->name('graphs.update');
+    Route::delete('graphs/{graph}', [GraphController::class, 'destroy'])->name('graphs.destroy');
+    Route::get('graphs/{graph}', [GraphController::class, 'show'])->name('graphs.show');
+
+    Route::post('graphs/{graph}/add/nodes/{node}', [GraphController::class, 'addNode'])->name('graphs.nodes.add');
+    Route::post('graphs/{graph}/add/relation', [GraphController::class, 'addRelation'])->name('graphs.nodes.add');
+
+
+    Route::post('/nodes/create', [NodeController::class, 'store'])->name('nodes.store');
+
+
+
+    // Route::post('graphs/{graph}/nodes/create', [GraphController::class, '']);
+    Route::apiResource('nodes', NodeController::class);
+
+    // Route::resource('relaions', RelationController::class);
+    
 });

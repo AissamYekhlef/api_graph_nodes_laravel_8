@@ -2,6 +2,10 @@
 
 namespace App\Traits;
 
+
+/**
+ * This Trait used for generate the output of the success, Error and data returned
+ */
 trait GeneralTrait
 {
 
