@@ -47,6 +47,11 @@ class ClearEmptyGraph extends Command
             }
         }
 
-        $this->info('Delete ' . $nbrDeleted . ' Graphs');
+        if ($nbrDeleted > 0) {
+            $this->info('Delete ' . $nbrDeleted . ' Graphs');
+        } else {
+            $this->info('There is no empty graph');
+        }
+               
     }
 }

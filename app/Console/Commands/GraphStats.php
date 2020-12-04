@@ -12,7 +12,7 @@ class GraphStats extends Command
      *
      * @var string
      */
-    protected $signature = ' graph:stats {--graphId=1}';
+    protected $signature = 'graph:stats {--graphId=1}';
 
     /**
      * The console command description.
@@ -46,10 +46,18 @@ class GraphStats extends Command
             return 0;
         }
 
+        $headers = ['Id', 'Name', 'Description'];
+        $this->table($headers, Graph::where('id', '=', $id)->get());   
+
         foreach ($graph->nodes as $node) {
             $node->relations();
         }
 
-        $this->info($graph);
+        // $headers = ['Id', 'graph_id', 'parents', 'childs'];
+        // $this->table($headers, $graph->nodes->get());
+
+        $this->info('Nodes :');
+        // dd($graph->nodes->relations);
+        $this->info($graph->nodes);
     }
 }
