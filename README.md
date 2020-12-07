@@ -180,6 +180,41 @@ Here is a result sample format:
 ```json
 {
     "status": true,
+    "message": "Added Successfuly",
+    "options": [],
+    "new graph": {
+        "id": 2,
+        "name": "new_name",
+        "description": "new_description"
+    }
+}
+```
+if the name is Alreaty taken return 400 error , like This exaample
+
+```json
+{
+    "status": false,
+    "errNum": "Error",
+    "message": {
+        "name": [
+            "The name has already been taken."
+        ]
+    }
+}
+```
+
+
+### PATCH /graphs/<graph_id>
+
+- Update an existing row in the graphs table
+returns status code 200 and json `{"success": True, "graphs": graph}` where graph an array containing only the updated graph
+or appropriate status code indicating reason for failure
+
+He is a sample for a  modified actor in a format:
+
+```json
+{
+    "status": true,
     "message": "Updated Successfuly",
     "options": [],
     "updated": {
@@ -200,31 +235,6 @@ if the name is Alreaty taken return 400 error , like This exaample
             "The name has already been taken."
         ]
     }
-}
-```
-
-
-### PATCH /actors/<actor_id>
-
-- Require the 'patch:actors' permission
-- Update an existing row in the actors table
-- Contain the actor.get_actor data representation
-returns status code 200 and json `{"success": True, "actors": actor}` where actor an array containing only the updated actor
-or appropriate status code indicating reason for failure
-
-He is a sample for a  modified actor in a format:
-
-```json
-{
-  "actors": [
-    {
-      "age": 25,
-      "gender": "female",
-      "id": 1,
-      "name": "Updated Actor 1"
-    }
-  ],
-  "success": true
 }
 ```
 
