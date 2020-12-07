@@ -47,6 +47,22 @@ php artisan test
 - you can change the default port by __php artisan serve --port=8888__
 - **Authentication**: This version of the application require authentication or API keys using Auth0 (Ps: The setup is givin in setup Auth0 section)
 
+## Artisan commands: Created
+
+### 1. Generate a random graph
+__php artisan graph:gen --nbNodes={$nbNodes}__
+
+This command create a random graph with $nbNodes nodes and random relations.
+
+### 2. Clear empty graphs
+__php artisan graph:clear__
+This command delete all empty graphs.
+
+### 3. Graph stats
+__php artisan graph:stats --gid={$graphId}__
+
+This command display graphs stats (display the graph meta data, number of nodes, number of relations) by graph id.
+
 ## Error Handling
 
 Errors are returned as JSON object in the following format:
@@ -154,9 +170,109 @@ Here is a returned sample fromat to a specific graph
 }
 ```
 
+### POST /graphs
+
+- Create a new row in the graphs table
+returns status code 200 and json `{"success": True, "graphs": graph}` where graph an array containing only the newly created graph or appropriate status code indicating reason for failure.
+
+Here is a result sample format:
+
+```json
+{
+    "status": true,
+    "message": "Updated Successfuly",
+    "options": [],
+    "updated": {
+        "id": 2,
+        "name": "updated_name",
+        "description": "updated_description"
+    }
+}
+```
+if the name is Alreaty taken return 400 error , like This exaample
+
+```json
+{
+    "status": false,
+    "errNum": "Error",
+    "message": {
+        "name": [
+            "The name has already been taken."
+        ]
+    }
+}
+```
 
 
+### PATCH /actors/<actor_id>
 
+- Require the 'patch:actors' permission
+- Update an existing row in the actors table
+- Contain the actor.get_actor data representation
+returns status code 200 and json `{"success": True, "actors": actor}` where actor an array containing only the updated actor
+or appropriate status code indicating reason for failure
 
+He is a sample for a  modified actor in a format:
+
+```json
+{
+  "actors": [
+    {
+      "age": 25,
+      "gender": "female",
+      "id": 1,
+      "name": "Updated Actor 1"
+    }
+  ],
+  "success": true
+}
+```
+
+### DELETE /graphs/<graph_id>
+
+- Delete the corresponding row for `<graph_id>` where `<graph_id>` is the existing model id
+- Respond with a 404 error if `<graph_id>` is not found
+- Returns status code 200 and json `{"success": True, "deleted": graph_id}` where id is the id of the deleted record
+or appropriate status code indicating reason for failure
+
+```json
+return $this->returnData(
+                'item', $graph, 
+                'Deleted Successful'
+            );
+```
+the result return
+
+```json
+{
+    "status": true,
+    "message": "Deleted Successful",
+    "options": [],
+    "item": {
+        "id": 20,
+        "name": "Torey Christiansen",
+        "description": "Quos ut et."
+    }
+}
+```
+
+### POST graphs/{graph}/add/nodes/{node} 
+
+```json
+return $this->returnData(
+                'item', $node, 
+                'Added Successful'
+            );
+```
+### POST graphs/{graph}/add/relation
+
+body must has two value parent_id, child_id
+
+```json
+return $this->returnData(
+        'Relation', $relation, 
+        'Added Successful'
+        );
+```
 ## from Mobidal-projects
 
