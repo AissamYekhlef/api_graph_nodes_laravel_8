@@ -40,24 +40,23 @@ class GraphStats extends Command
     {
         $id = $this->option('graphId');
 
-        $graph = Graph::find($id);
+        $graph = Graph::where('id', '=', $id)->first();
+        
         if(!$graph){
             $this->error('The graphId must be exists');
             return 0;
         }
 
-        $headers = ['Id', 'Name', 'Description'];
-        $this->table($headers, Graph::where('id', '=', $id)->get());   
+        $rows = [];
+        $row[0] = $graph->id;
+        $row[1] = $graph->name; 
+        $row[2] = $graph->description; 
+        $row[3] = $graph->nodes->count(); 
+        $row[4] = $graph->nodes->count() * 2;  // need to confirm    
+        $rows[] = $row;
 
-        foreach ($graph->nodes as $node) {
-            $node->relations();
-        }
+        $headers = ['Id', 'Name', 'Description', 'Nodes Number', 'Relation Number'];
+        $this->table($headers, $rows);   
 
-        // $headers = ['Id', 'graph_id', 'parents', 'childs'];
-        // $this->table($headers, $graph->nodes->get());
-
-        $this->info('Nodes :');
-        // dd($graph->nodes->relations);
-        $this->info($graph->nodes);
     }
 }

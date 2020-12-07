@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class Graph extends Model
 {
     use HasFactory;
@@ -26,6 +25,7 @@ class Graph extends Model
         return $this->hasMany(Node::class);
     }
 
+
     public static function getIfExists($id){
         $graph = Graph::find($id);
         if($graph == null){
@@ -34,4 +34,5 @@ class Graph extends Model
             return $graph;
         }
     }
+
 }

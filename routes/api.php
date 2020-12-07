@@ -53,14 +53,11 @@ Route::group([
     Route::get('graphs/{graph}', [GraphController::class, 'show'])->name('graphs.show');
 
     Route::post('graphs/{graph}/add/nodes/{node}', [GraphController::class, 'addNode'])->name('graphs.nodes.add');
-    Route::post('graphs/{graph}/add/relation', [GraphController::class, 'addRelation'])->name('graphs.nodes.add');
+    Route::post('graphs/{graph}/add/relation', [GraphController::class, 'addRelation'])->name('graphs.relations.add');
 
 
     Route::post('/nodes/create', [NodeController::class, 'store'])->name('nodes.store');
 
-
-
-    // Route::post('graphs/{graph}/nodes/create', [GraphController::class, '']);
     Route::apiResource('nodes', NodeController::class);
 
     // Route::resource('relaions', RelationController::class);
